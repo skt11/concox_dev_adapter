@@ -10,23 +10,23 @@ const io = socketio(server)
 io.on('connection', (socket) => {
     console.log(`Connected to: ${socket}`)
     socket.on("login", (data) => {
-        const decodedData = decodeLogin(data)
+        const decodedData = decodeLogin(data.toLowerCase())
         if (!decodedData.error) {
-            console.log(`Login Packet: ${decodedData}`)
+            console.log(`Login Packet: ${JSON.stringify(decodedData)}`)
             socket.emit("loginResponse", "loggedIn")
         }
     })
     socket.on("heartBeat", (data) => {
-        const decodedData = decodeHeartBeat(data)
+        const decodedData = decodeHeartBeat(data.toLowerCase())
         if (!decodedData.error) {
             console.log(`Heart beat Packet: ${JSON.stringify(decodedData)}`)
             socket.emit("heartBeatResponse", "Heart beat ACK")
         }
     })
     socket.on("gpsData", (data) => {
-        const decodedData = decodeGPS(data)
+        const decodedData = decodeGPS(data.toLowerCase())
         if (!decodedData.error) {
-            console.log(`GPS Packet: ${decodedData}`)
+            console.log(`GPS Packet: ${JSON.stringify(decodedData)}`)
         }
     })
     socket.on('disconnect', () => {

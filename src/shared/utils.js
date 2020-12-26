@@ -1,8 +1,11 @@
 const crc16 = require('node-crc-itu');
+const { protocolConstants } = require("./Constants");
 
-const isInfoValid = (data, expected) => {
-    const actual = crc16(data)
-    return actual === expected
+const isInfoValid = (data) => {
+    const actual = crc16(data.errCheckContent)
+    return actual === data.errCheckCode
+        && data.startBit === protocolConstants.startBit
+        && data.stopBit === protocolConstants.stopBit
 }
 
 const extractCodes = (data) => {
@@ -18,4 +21,8 @@ const extractCodes = (data) => {
     })
 }
 
-module.exports = { isInfoValid, extractCodes }
+const hexToBin = (hex) => {
+    return (parseInt(hex, 16).toString(2)).padStart(8, '0');
+}
+
+module.exports = { isInfoValid, extractCodes, hexToBin }
