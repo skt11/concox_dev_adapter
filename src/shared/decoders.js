@@ -1,13 +1,27 @@
+const { extractCodes, isInfoValid } = require('./utils');
+
 const decodeLogin = (data) => {
-    return data
+    const { infoContent, errCheckCode, errCheckContent } = extractCodes(data)
+    if (isInfoValid(errCheckContent, errCheckCode)) {
+        return infoContent
+    }
+    return { error: "Invalid data" }
 }
 
 const decodeHeartBeat = (data) => {
-    return data
+    const extractedCodes = extractCodes(data)
+    if (isInfoValid(extractedCodes.errCheckContent, extractedCodes.errCheckCode)) {
+        return extractedCodes
+    }
+    return { error: "Invalid data" }
 }
 
 const decodeGPS = (data) => {
-    return data
+    const { infoContent, errCheckCode, errCheckContent } = extractCodes(data)
+    if (isInfoValid(errCheckContent, errCheckCode)) {
+        return infoContent
+    }
+    return { error: "Invalid data" }
 }
 
 module.exports = { decodeLogin, decodeHeartBeat, decodeGPS }

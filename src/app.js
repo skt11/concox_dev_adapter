@@ -19,7 +19,7 @@ io.on('connection', (socket) => {
     socket.on("heartBeat", (data) => {
         const decodedData = decodeHeartBeat(data)
         if (!decodedData.error) {
-            console.log(`Heart beat Packet: ${decodedData}`)
+            console.log(`Heart beat Packet: ${JSON.stringify(decodedData)}`)
             socket.emit("heartBeatResponse", "Heart beat ACK")
         }
     })
