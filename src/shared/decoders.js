@@ -1,11 +1,22 @@
 const { extractCodes, isInfoValid, hexToBin } = require('./utils');
-const { protocolConstants } = require("./Constants");
-const { heartBeat, gps, login } = protocolConstants;
+const { protocolConstants: { heartBeat, gps, login } } = require("./Constants");
 
 const decodeLogin = (data) => {
     const extractedCodes = extractCodes(data)
-    if (isInfoValid(extractedCodes)) {
-        return extractedCodes
+    
+    if (isInfoValid(extractedCodes) && extractedCodes.protocolNumber === login.protocolNumber) {
+        const decodedData = {}
+
+        const terminalIDCode = extractedCodes.infoContent.substr(0, 16)
+        const typeIDCode = extractedCodes.infoContent.substr(16, 4)
+        const timeZoneCode = extractedCodes.infoContent.substr(20, 3)
+        const gmtZoneBit = hexToBin(extractedCodes.infoContent.substr(23, 2))[0]
+
+        decodedData["Terminal ID"] = terminalIDCode
+        decodedData["Type ID"] = typeIDCode
+        decodedData["Time Zone"] = `GMT ${gmtZoneBit === '0' ? '+' : '-'} ${parseInt(timeZoneCode, 16) / 100}`
+
+        return decodedData
     }
     return { error: "Invalid data" }
 }

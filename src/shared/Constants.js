@@ -66,4 +66,9 @@ const protocolConstants = {
     }
 }
 
-module.exports = { protocolConstants }
+const responseData = {
+    login: "7878050100059FF80D0A",
+    heartBeat: "787805230100670E0D0A",
+}
+
+module.exports = { protocolConstants, responseData }
