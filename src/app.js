@@ -3,6 +3,7 @@ const socketio = require('socket.io')
 const http = require("http")
 const { decodeGPS, decodeLogin, decodeHeartBeat } = require('./shared/decoders');
 const { responseData } = require('./shared/Constants')
+const { saveOutput } = require("./shared/utils")
 
 const server = http.createServer(express())
 const io = socketio(server)
@@ -27,6 +28,7 @@ io.on('connection', (socket) => {
     socket.on("gpsData", (data) => {
         const decodedData = decodeGPS(data.toLowerCase())
         if (!decodedData.error) {
+            saveOutput(decodedData)
             console.log(`GPS Packet: ${JSON.stringify(decodedData, null, 2)}`)
         }
     })

@@ -1,5 +1,7 @@
 const crc16 = require('node-crc-itu');
 const { protocolConstants } = require("./Constants");
+const fs = require('fs');
+const path = require('path');
 
 const isInfoValid = (data) => {
     const actual = crc16(data.errCheckContent)
@@ -21,8 +23,26 @@ const extractCodes = (data) => {
     })
 }
 
+const saveOutput = (data, outputFile = "gpsData.json") => {
+    
+    const opPath = path.join(__dirname, "..", "output", outputFile)
+    let json = []
+    
+    try {
+        
+        const jsonStr = fs.readFileSync(opPath)
+        json = JSON.parse(jsonStr)
+    
+    } catch (e) {
+        fs.openSync(opPath, 'w')
+    }
+    
+    json.push(data)
+    fs.writeFileSync(opPath, JSON.stringify(json, null, 2))
+}
+
 const hexToBin = (hex) => {
     return (parseInt(hex, 16).toString(2)).padStart(8, '0');
 }
 
-module.exports = { isInfoValid, extractCodes, hexToBin }
+module.exports = { isInfoValid, extractCodes, hexToBin, saveOutput }
