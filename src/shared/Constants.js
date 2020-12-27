@@ -31,7 +31,38 @@ const protocolConstants = {
         }
     },
     gps: {
-        protocolNumber: "22"
+        protocolNumber: "22",
+        acc: {
+            "00": "Low",
+            "01": "High",
+            "06": "Not Available"
+        },
+        dataUploadMode: {
+            "00": "Upload by time interval",
+            "01": "Upload by distance interval",
+            "02": "Inflection point upload",
+            "03": "ACC status upload",
+            "04": "Re - upload the last GPS point when back to static.",
+            "05": "Upload the last effective point when network recovers.",
+            "06": "Update ephemeris and upload GPS data compulsorily",
+            "07": "Upload location when side key triggered",
+            "08": "Upload location after power on",
+            "09": "Unused",
+            "0a": "Upload the last longitude and latitude when device is static; time updated",
+            "0d": "Upload the last longitude and latitude when device is static",
+            "0e": "Gpsdup upload(Upload regularly in a static state.)."
+        },
+        gpsRealTimeReupload: {
+            "00": "Real time upload",
+            "01": "Re-upload"
+        },
+        courseStatus: {
+            bit_5: { 0: "Real Time GPS", 1: "Differential positioning" },
+            bit_4: { 0: "GPS not positioned", 1: " GPS has been positioned" },
+            bit_3: { 0: "East Longitude", 1: "West Longitude" },
+            bit_2: { 0: "South Latitude", 1: "North Latitude" }
+        }
+
     }
 }
 
