@@ -9,4 +9,4 @@ Run ```npm run dev``` in the project root.
 
 ### Config
 Change the **PORT** in **config/dev.env** to run on a different port.
->**Note:** Terminate and re run the proecess after changing env variables.
+>**Note:** Terminate and re run the processes after changing env variables.
