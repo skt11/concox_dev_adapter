@@ -1,5 +1,7 @@
 const server = require('./src/app')
 
-server.listen(3001, ()=>{
-    console.log("Adapter up on 3001")
+const port = process.env.PORT
+
+server.listen(port, () => {
+    console.log(`Adapter up on ${port}`)
 })

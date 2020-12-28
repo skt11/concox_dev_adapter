@@ -28,17 +28,16 @@ const saveOutput = (data, outputFile = "gpsData.json") => {
     const opPath = path.join(__dirname, "..", "output", outputFile)
     let json = []
     
-    try {
-        
+    try {       
         const jsonStr = fs.readFileSync(opPath)
         json = JSON.parse(jsonStr)
-    
     } catch (e) {
         fs.openSync(opPath, 'w')
     }
     
     json.push(data)
     fs.writeFileSync(opPath, JSON.stringify(json, null, 2))
+    console.log(`Output saved to ${opPath}`)
 }
 
 const hexToBin = (hex) => {
