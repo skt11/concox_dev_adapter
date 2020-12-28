@@ -5,7 +5,7 @@
 2. Run ```npm install``` in the project root.
 
 ### Running
-Run ```npm run dev`` in the project root.
+Run ```npm run dev``` in the project root.
 
 ### Config
 Chnage the port number in **config/dev.env** to run on a different port.
