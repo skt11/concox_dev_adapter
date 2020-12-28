@@ -3,6 +3,8 @@ const { protocolConstants } = require("./Constants");
 const fs = require('fs');
 const path = require('path');
 
+//Checks if the packet is valid by using crc-itu error check
+//Checks if the start and stop bits are valid
 const isInfoValid = (data) => {
     const actual = crc16(data.errCheckContent)
     return actual === data.errCheckCode
@@ -10,6 +12,7 @@ const isInfoValid = (data) => {
         && data.stopBit === protocolConstants.stopBit
 }
 
+//Extracts the common codes from the packet
 const extractCodes = (data) => {
     return ({
         startBit: data.substring(0, 4),
@@ -23,6 +26,9 @@ const extractCodes = (data) => {
     })
 }
 
+//Stores output in a json file
+//If the "outputFile" does not exist it will create a new one
+//If it exists it will update the data
 const saveOutput = (data, outputFile = "gpsData.json") => {
     
     const opPath = path.join(__dirname, "..", "output", outputFile)
@@ -40,6 +46,7 @@ const saveOutput = (data, outputFile = "gpsData.json") => {
     console.log(`Output saved to ${opPath}`)
 }
 
+//Parses 1 byte hex string to binary string 
 const hexToBin = (hex) => {
     return (parseInt(hex, 16).toString(2)).padStart(8, '0');
 }

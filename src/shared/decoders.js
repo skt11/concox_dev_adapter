@@ -1,9 +1,18 @@
 const { extractCodes, isInfoValid, hexToBin } = require('./utils');
 const { protocolConstants: { heartBeat, gps, login } } = require("./Constants");
 
+/**
+ * All the decode functions take the data pakcet as input
+ * Extracts the hex codes, checks if it's valid with CRC-ITU check
+ * validates corresponding protocol numbers
+ * returns an error object if data is not valid
+ * Otherwise Decodes the hex codes according to the protocol document and returns the decodedData object
+ */
+
+//Decodes the login packet
 const decodeLogin = (data) => {
     const extractedCodes = extractCodes(data)
-    
+
     if (isInfoValid(extractedCodes) && extractedCodes.protocolNumber === login.protocolNumber) {
         const decodedData = {}
 
@@ -21,6 +30,7 @@ const decodeLogin = (data) => {
     return { error: "Invalid data" }
 }
 
+//Decodes the heartBeat packet
 const decodeHeartBeat = (data) => {
     const extractedCodes = extractCodes(data)
 
@@ -47,6 +57,7 @@ const decodeHeartBeat = (data) => {
     return { error: "Invalid data" }
 }
 
+//Decodes the GPS packet
 const decodeGPS = (data) => {
     const extractedCodes = extractCodes(data)
 

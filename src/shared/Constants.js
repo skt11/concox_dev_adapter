@@ -1,3 +1,4 @@
+//Hex code and value mapping from the protocol doc
 const protocolConstants = {
     startBit: "7878",
     stopBit: "0d0a",
